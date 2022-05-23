@@ -1,0 +1,25 @@
+server:
+  port: 2000
+
+eureka:
+   client:
+    service-url:
+      defaultZone: http://localhost:9095/eureka
+   instance:
+    prefer-ip-address: true
+    
+spring:
+  application:
+    name: BankapplicationGateway
+    
+  cloud:
+    gateway:
+      routes:
+      - id: banktransaction
+        uri: lb://bank-service
+        predicates:
+        - Path=/bank/**
+      - id: mobiletransaction
+        uri: lb://mobile-banking-service
+        predicates:
+        - Path=/mobilebank/**
